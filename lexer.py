@@ -2,13 +2,12 @@ import ply.lex as lex
 
 # Lista de nomes dos tokens. Isso é obrigatório.
 tokens = [
-    'NAMEDEVICE', 'OBSERVATION', 'MSG', 'NUM', 'BOOL',
+    'NAMEDEVICE', 'MSG', 'NUM', 'BOOL',
     'MAIOR_IGUAL', 'MENOR_IGUAL', 'IGUAL_IGUAL', 'DIFERENTE',
     'E_LOGICO',
+    'GT', 'LT'
 ]
 
-# Palavras-chave reservadas
-# These are otherwise known as terminal symbols
 reserved = {
     'dispositivo': 'DISPOSITIVO',
     'set': 'SET',
@@ -25,16 +24,20 @@ reserved = {
     'FALSE': 'BOOL'
 }
 
+tokens = tokens + list(reserved.values())
+
 # Expressões regulares simples para tokens
 t_MAIOR_IGUAL = r'>='
 t_MENOR_IGUAL = r'<='
 t_IGUAL_IGUAL = r'=='
 t_DIFERENTE = r'!='
 t_E_LOGICO = r'&&'
-t_ignore = ' \t' # Ignorar espaços e tabs
+t_GT = r'>'
+t_LT = r'<'
+t_ignore = ' \t'
 
 # Literais de um único caractere
-literals = ['{', '}', ',', '=', '>', '<', '.', '(', ')', ':']
+literals = ['{', '}', ',', '=', '.', '(', ')', ':']
 
 # Regra para números inteiros não negativos
 def t_NUM(t):

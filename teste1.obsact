@@ -1,0 +1,12 @@
+dispositivo: {Termometro, temperatura}
+dispositivo: {Ventilador}
+dispositivo: {Monitor}
+dispositivo: {Celular}
+
+set temperatura = 40.
+se temperatura > 35 entao ligar Ventilador.
+se temperatura > 38 entao
+    enviar alerta ("Temperatura muito alta!", temperatura) Termometro.
+
+enviar alerta ("Sistema Ativado") para todos: Monitor, Celular.
+

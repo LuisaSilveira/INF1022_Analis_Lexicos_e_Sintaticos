@@ -1,0 +1,731 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> devices cmds
+Rule 2     devices -> device devices
+Rule 3     devices -> device
+Rule 4     device -> DISPOSITIVO : { NAMEDEVICE }
+Rule 5     device -> DISPOSITIVO : { NAMEDEVICE , NAMEDEVICE }
+Rule 6     cmds -> cmd . cmds
+Rule 7     cmds -> cmd .
+Rule 8     cmds -> <empty>
+Rule 9     cmd -> attrib
+Rule 10    cmd -> obsact
+Rule 11    cmd -> act
+Rule 12    attrib -> SET NAMEDEVICE = var
+Rule 13    var -> NUM
+Rule 14    var -> BOOL
+Rule 15    obsact -> SE obs ENTAO act
+Rule 16    obsact -> SE obs ENTAO act SENAO act
+Rule 17    obs -> NAMEDEVICE oplogic var
+Rule 18    obs -> NAMEDEVICE oplogic var E_LOGICO obs
+Rule 19    oplogic -> GT
+Rule 20    oplogic -> LT
+Rule 21    oplogic -> MAIOR_IGUAL
+Rule 22    oplogic -> MENOR_IGUAL
+Rule 23    oplogic -> IGUAL_IGUAL
+Rule 24    oplogic -> DIFERENTE
+Rule 25    act -> action NAMEDEVICE
+Rule 26    act -> ENVIAR ALERTA ( MSG ) NAMEDEVICE
+Rule 27    act -> ENVIAR ALERTA ( MSG , NAMEDEVICE ) NAMEDEVICE
+Rule 28    act -> ENVIAR ALERTA ( MSG ) PARA TODOS : dev_list
+Rule 29    dev_list -> NAMEDEVICE , dev_list
+Rule 30    dev_list -> NAMEDEVICE
+Rule 31    action -> LIGAR
+Rule 32    action -> DESLIGAR
+
+Terminals, with rules where they appear
+
+(                    : 26 27 28
+)                    : 26 27 28
+,                    : 5 27 29
+.                    : 6 7
+:                    : 4 5 28
+=                    : 12
+ALERTA               : 26 27 28
+BOOL                 : 14
+DESLIGAR             : 32
+DIFERENTE            : 24
+DISPOSITIVO          : 4 5
+ENTAO                : 15 16
+ENVIAR               : 26 27 28
+E_LOGICO             : 18
+GT                   : 19
+IGUAL_IGUAL          : 23
+LIGAR                : 31
+LT                   : 20
+MAIOR_IGUAL          : 21
+MENOR_IGUAL          : 22
+MSG                  : 26 27 28
+NAMEDEVICE           : 4 5 5 12 17 18 25 26 27 27 29 30
+NUM                  : 13
+PARA                 : 28
+SE                   : 15 16
+SENAO                : 16
+SET                  : 12
+TODOS                : 28
+error                : 
+{                    : 4 5
+}                    : 4 5
+
+Nonterminals, with rules where they appear
+
+act                  : 11 15 16 16
+action               : 25
+attrib               : 9
+cmd                  : 6 7
+cmds                 : 1 6
+dev_list             : 28 29
+device               : 2 3
+devices              : 1 2
+obs                  : 15 16 18
+obsact               : 10
+oplogic              : 17 18
+program              : 0
+var                  : 12 17 18
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . devices cmds
+    (2) devices -> . device devices
+    (3) devices -> . device
+    (4) device -> . DISPOSITIVO : { NAMEDEVICE }
+    (5) device -> . DISPOSITIVO : { NAMEDEVICE , NAMEDEVICE }
+
+    DISPOSITIVO     shift and go to state 4
+
+    program                        shift and go to state 1
+    devices                        shift and go to state 2
+    device                         shift and go to state 3
+
+state 1
+
+    (0) S' -> program .
+
+
+
+state 2
+
+    (1) program -> devices . cmds
+    (6) cmds -> . cmd . cmds
+    (7) cmds -> . cmd .
+    (8) cmds -> .
+    (9) cmd -> . attrib
+    (10) cmd -> . obsact
+    (11) cmd -> . act
+    (12) attrib -> . SET NAMEDEVICE = var
+    (15) obsact -> . SE obs ENTAO act
+    (16) obsact -> . SE obs ENTAO act SENAO act
+    (25) act -> . action NAMEDEVICE
+    (26) act -> . ENVIAR ALERTA ( MSG ) NAMEDEVICE
+    (27) act -> . ENVIAR ALERTA ( MSG , NAMEDEVICE ) NAMEDEVICE
+    (28) act -> . ENVIAR ALERTA ( MSG ) PARA TODOS : dev_list
+    (31) action -> . LIGAR
+    (32) action -> . DESLIGAR
+
+    $end            reduce using rule 8 (cmds -> .)
+    SET             shift and go to state 10
+    SE              shift and go to state 11
+    ENVIAR          shift and go to state 13
+    LIGAR           shift and go to state 14
+    DESLIGAR        shift and go to state 15
+
+    cmds                           shift and go to state 5
+    cmd                            shift and go to state 6
+    attrib                         shift and go to state 7
+    obsact                         shift and go to state 8
+    act                            shift and go to state 9
+    action                         shift and go to state 12
+
+state 3
+
+    (2) devices -> device . devices
+    (3) devices -> device .
+    (2) devices -> . device devices
+    (3) devices -> . device
+    (4) device -> . DISPOSITIVO : { NAMEDEVICE }
+    (5) device -> . DISPOSITIVO : { NAMEDEVICE , NAMEDEVICE }
+
+    SET             reduce using rule 3 (devices -> device .)
+    SE              reduce using rule 3 (devices -> device .)
+    ENVIAR          reduce using rule 3 (devices -> device .)
+    LIGAR           reduce using rule 3 (devices -> device .)
+    DESLIGAR        reduce using rule 3 (devices -> device .)
+    $end            reduce using rule 3 (devices -> device .)
+    DISPOSITIVO     shift and go to state 4
+
+    device                         shift and go to state 3
+    devices                        shift and go to state 16
+
+state 4
+
+    (4) device -> DISPOSITIVO . : { NAMEDEVICE }
+    (5) device -> DISPOSITIVO . : { NAMEDEVICE , NAMEDEVICE }
+
+    :               shift and go to state 17
+
+
+state 5
+
+    (1) program -> devices cmds .
+
+    $end            reduce using rule 1 (program -> devices cmds .)
+
+
+state 6
+
+    (6) cmds -> cmd . . cmds
+    (7) cmds -> cmd . .
+
+    .               shift and go to state 18
+
+
+state 7
+
+    (9) cmd -> attrib .
+
+    .               reduce using rule 9 (cmd -> attrib .)
+
+
+state 8
+
+    (10) cmd -> obsact .
+
+    .               reduce using rule 10 (cmd -> obsact .)
+
+
+state 9
+
+    (11) cmd -> act .
+
+    .               reduce using rule 11 (cmd -> act .)
+
+
+state 10
+
+    (12) attrib -> SET . NAMEDEVICE = var
+
+    NAMEDEVICE      shift and go to state 19
+
+
+state 11
+
+    (15) obsact -> SE . obs ENTAO act
+    (16) obsact -> SE . obs ENTAO act SENAO act
+    (17) obs -> . NAMEDEVICE oplogic var
+    (18) obs -> . NAMEDEVICE oplogic var E_LOGICO obs
+
+    NAMEDEVICE      shift and go to state 21
+
+    obs                            shift and go to state 20
+
+state 12
+
+    (25) act -> action . NAMEDEVICE
+
+    NAMEDEVICE      shift and go to state 22
+
+
+state 13
+
+    (26) act -> ENVIAR . ALERTA ( MSG ) NAMEDEVICE
+    (27) act -> ENVIAR . ALERTA ( MSG , NAMEDEVICE ) NAMEDEVICE
+    (28) act -> ENVIAR . ALERTA ( MSG ) PARA TODOS : dev_list
+
+    ALERTA          shift and go to state 23
+
+
+state 14
+
+    (31) action -> LIGAR .
+
+    NAMEDEVICE      reduce using rule 31 (action -> LIGAR .)
+
+
+state 15
+
+    (32) action -> DESLIGAR .
+
+    NAMEDEVICE      reduce using rule 32 (action -> DESLIGAR .)
+
+
+state 16
+
+    (2) devices -> device devices .
+
+    SET             reduce using rule 2 (devices -> device devices .)
+    SE              reduce using rule 2 (devices -> device devices .)
+    ENVIAR          reduce using rule 2 (devices -> device devices .)
+    LIGAR           reduce using rule 2 (devices -> device devices .)
+    DESLIGAR        reduce using rule 2 (devices -> device devices .)
+    $end            reduce using rule 2 (devices -> device devices .)
+
+
+state 17
+
+    (4) device -> DISPOSITIVO : . { NAMEDEVICE }
+    (5) device -> DISPOSITIVO : . { NAMEDEVICE , NAMEDEVICE }
+
+    {               shift and go to state 24
+
+
+state 18
+
+    (6) cmds -> cmd . . cmds
+    (7) cmds -> cmd . .
+    (6) cmds -> . cmd . cmds
+    (7) cmds -> . cmd .
+    (8) cmds -> .
+    (9) cmd -> . attrib
+    (10) cmd -> . obsact
+    (11) cmd -> . act
+    (12) attrib -> . SET NAMEDEVICE = var
+    (15) obsact -> . SE obs ENTAO act
+    (16) obsact -> . SE obs ENTAO act SENAO act
+    (25) act -> . action NAMEDEVICE
+    (26) act -> . ENVIAR ALERTA ( MSG ) NAMEDEVICE
+    (27) act -> . ENVIAR ALERTA ( MSG , NAMEDEVICE ) NAMEDEVICE
+    (28) act -> . ENVIAR ALERTA ( MSG ) PARA TODOS : dev_list
+    (31) action -> . LIGAR
+    (32) action -> . DESLIGAR
+
+  ! reduce/reduce conflict for $end resolved using rule 7 (cmds -> cmd . .)
+    $end            reduce using rule 7 (cmds -> cmd . .)
+    SET             shift and go to state 10
+    SE              shift and go to state 11
+    ENVIAR          shift and go to state 13
+    LIGAR           shift and go to state 14
+    DESLIGAR        shift and go to state 15
+
+  ! $end            [ reduce using rule 8 (cmds -> .) ]
+
+    cmd                            shift and go to state 6
+    cmds                           shift and go to state 25
+    attrib                         shift and go to state 7
+    obsact                         shift and go to state 8
+    act                            shift and go to state 9
+    action                         shift and go to state 12
+
+state 19
+
+    (12) attrib -> SET NAMEDEVICE . = var
+
+    =               shift and go to state 26
+
+
+state 20
+
+    (15) obsact -> SE obs . ENTAO act
+    (16) obsact -> SE obs . ENTAO act SENAO act
+
+    ENTAO           shift and go to state 27
+
+
+state 21
+
+    (17) obs -> NAMEDEVICE . oplogic var
+    (18) obs -> NAMEDEVICE . oplogic var E_LOGICO obs
+    (19) oplogic -> . GT
+    (20) oplogic -> . LT
+    (21) oplogic -> . MAIOR_IGUAL
+    (22) oplogic -> . MENOR_IGUAL
+    (23) oplogic -> . IGUAL_IGUAL
+    (24) oplogic -> . DIFERENTE
+
+    GT              shift and go to state 29
+    LT              shift and go to state 30
+    MAIOR_IGUAL     shift and go to state 31
+    MENOR_IGUAL     shift and go to state 32
+    IGUAL_IGUAL     shift and go to state 33
+    DIFERENTE       shift and go to state 34
+
+    oplogic                        shift and go to state 28
+
+state 22
+
+    (25) act -> action NAMEDEVICE .
+
+    .               reduce using rule 25 (act -> action NAMEDEVICE .)
+    SENAO           reduce using rule 25 (act -> action NAMEDEVICE .)
+
+
+state 23
+
+    (26) act -> ENVIAR ALERTA . ( MSG ) NAMEDEVICE
+    (27) act -> ENVIAR ALERTA . ( MSG , NAMEDEVICE ) NAMEDEVICE
+    (28) act -> ENVIAR ALERTA . ( MSG ) PARA TODOS : dev_list
+
+    (               shift and go to state 35
+
+
+state 24
+
+    (4) device -> DISPOSITIVO : { . NAMEDEVICE }
+    (5) device -> DISPOSITIVO : { . NAMEDEVICE , NAMEDEVICE }
+
+    NAMEDEVICE      shift and go to state 36
+
+
+state 25
+
+    (6) cmds -> cmd . cmds .
+
+    $end            reduce using rule 6 (cmds -> cmd . cmds .)
+
+
+state 26
+
+    (12) attrib -> SET NAMEDEVICE = . var
+    (13) var -> . NUM
+    (14) var -> . BOOL
+
+    NUM             shift and go to state 38
+    BOOL            shift and go to state 39
+
+    var                            shift and go to state 37
+
+state 27
+
+    (15) obsact -> SE obs ENTAO . act
+    (16) obsact -> SE obs ENTAO . act SENAO act
+    (25) act -> . action NAMEDEVICE
+    (26) act -> . ENVIAR ALERTA ( MSG ) NAMEDEVICE
+    (27) act -> . ENVIAR ALERTA ( MSG , NAMEDEVICE ) NAMEDEVICE
+    (28) act -> . ENVIAR ALERTA ( MSG ) PARA TODOS : dev_list
+    (31) action -> . LIGAR
+    (32) action -> . DESLIGAR
+
+    ENVIAR          shift and go to state 13
+    LIGAR           shift and go to state 14
+    DESLIGAR        shift and go to state 15
+
+    act                            shift and go to state 40
+    action                         shift and go to state 12
+
+state 28
+
+    (17) obs -> NAMEDEVICE oplogic . var
+    (18) obs -> NAMEDEVICE oplogic . var E_LOGICO obs
+    (13) var -> . NUM
+    (14) var -> . BOOL
+
+    NUM             shift and go to state 38
+    BOOL            shift and go to state 39
+
+    var                            shift and go to state 41
+
+state 29
+
+    (19) oplogic -> GT .
+
+    NUM             reduce using rule 19 (oplogic -> GT .)
+    BOOL            reduce using rule 19 (oplogic -> GT .)
+
+
+state 30
+
+    (20) oplogic -> LT .
+
+    NUM             reduce using rule 20 (oplogic -> LT .)
+    BOOL            reduce using rule 20 (oplogic -> LT .)
+
+
+state 31
+
+    (21) oplogic -> MAIOR_IGUAL .
+
+    NUM             reduce using rule 21 (oplogic -> MAIOR_IGUAL .)
+    BOOL            reduce using rule 21 (oplogic -> MAIOR_IGUAL .)
+
+
+state 32
+
+    (22) oplogic -> MENOR_IGUAL .
+
+    NUM             reduce using rule 22 (oplogic -> MENOR_IGUAL .)
+    BOOL            reduce using rule 22 (oplogic -> MENOR_IGUAL .)
+
+
+state 33
+
+    (23) oplogic -> IGUAL_IGUAL .
+
+    NUM             reduce using rule 23 (oplogic -> IGUAL_IGUAL .)
+    BOOL            reduce using rule 23 (oplogic -> IGUAL_IGUAL .)
+
+
+state 34
+
+    (24) oplogic -> DIFERENTE .
+
+    NUM             reduce using rule 24 (oplogic -> DIFERENTE .)
+    BOOL            reduce using rule 24 (oplogic -> DIFERENTE .)
+
+
+state 35
+
+    (26) act -> ENVIAR ALERTA ( . MSG ) NAMEDEVICE
+    (27) act -> ENVIAR ALERTA ( . MSG , NAMEDEVICE ) NAMEDEVICE
+    (28) act -> ENVIAR ALERTA ( . MSG ) PARA TODOS : dev_list
+
+    MSG             shift and go to state 42
+
+
+state 36
+
+    (4) device -> DISPOSITIVO : { NAMEDEVICE . }
+    (5) device -> DISPOSITIVO : { NAMEDEVICE . , NAMEDEVICE }
+
+    }               shift and go to state 43
+    ,               shift and go to state 44
+
+
+state 37
+
+    (12) attrib -> SET NAMEDEVICE = var .
+
+    .               reduce using rule 12 (attrib -> SET NAMEDEVICE = var .)
+
+
+state 38
+
+    (13) var -> NUM .
+
+    .               reduce using rule 13 (var -> NUM .)
+    E_LOGICO        reduce using rule 13 (var -> NUM .)
+    ENTAO           reduce using rule 13 (var -> NUM .)
+
+
+state 39
+
+    (14) var -> BOOL .
+
+    .               reduce using rule 14 (var -> BOOL .)
+    E_LOGICO        reduce using rule 14 (var -> BOOL .)
+    ENTAO           reduce using rule 14 (var -> BOOL .)
+
+
+state 40
+
+    (15) obsact -> SE obs ENTAO act .
+    (16) obsact -> SE obs ENTAO act . SENAO act
+
+    .               reduce using rule 15 (obsact -> SE obs ENTAO act .)
+    SENAO           shift and go to state 45
+
+
+state 41
+
+    (17) obs -> NAMEDEVICE oplogic var .
+    (18) obs -> NAMEDEVICE oplogic var . E_LOGICO obs
+
+    ENTAO           reduce using rule 17 (obs -> NAMEDEVICE oplogic var .)
+    E_LOGICO        shift and go to state 46
+
+
+state 42
+
+    (26) act -> ENVIAR ALERTA ( MSG . ) NAMEDEVICE
+    (27) act -> ENVIAR ALERTA ( MSG . , NAMEDEVICE ) NAMEDEVICE
+    (28) act -> ENVIAR ALERTA ( MSG . ) PARA TODOS : dev_list
+
+    )               shift and go to state 47
+    ,               shift and go to state 48
+
+
+state 43
+
+    (4) device -> DISPOSITIVO : { NAMEDEVICE } .
+
+    DISPOSITIVO     reduce using rule 4 (device -> DISPOSITIVO : { NAMEDEVICE } .)
+    SET             reduce using rule 4 (device -> DISPOSITIVO : { NAMEDEVICE } .)
+    SE              reduce using rule 4 (device -> DISPOSITIVO : { NAMEDEVICE } .)
+    ENVIAR          reduce using rule 4 (device -> DISPOSITIVO : { NAMEDEVICE } .)
+    LIGAR           reduce using rule 4 (device -> DISPOSITIVO : { NAMEDEVICE } .)
+    DESLIGAR        reduce using rule 4 (device -> DISPOSITIVO : { NAMEDEVICE } .)
+    $end            reduce using rule 4 (device -> DISPOSITIVO : { NAMEDEVICE } .)
+
+
+state 44
+
+    (5) device -> DISPOSITIVO : { NAMEDEVICE , . NAMEDEVICE }
+
+    NAMEDEVICE      shift and go to state 49
+
+
+state 45
+
+    (16) obsact -> SE obs ENTAO act SENAO . act
+    (25) act -> . action NAMEDEVICE
+    (26) act -> . ENVIAR ALERTA ( MSG ) NAMEDEVICE
+    (27) act -> . ENVIAR ALERTA ( MSG , NAMEDEVICE ) NAMEDEVICE
+    (28) act -> . ENVIAR ALERTA ( MSG ) PARA TODOS : dev_list
+    (31) action -> . LIGAR
+    (32) action -> . DESLIGAR
+
+    ENVIAR          shift and go to state 13
+    LIGAR           shift and go to state 14
+    DESLIGAR        shift and go to state 15
+
+    act                            shift and go to state 50
+    action                         shift and go to state 12
+
+state 46
+
+    (18) obs -> NAMEDEVICE oplogic var E_LOGICO . obs
+    (17) obs -> . NAMEDEVICE oplogic var
+    (18) obs -> . NAMEDEVICE oplogic var E_LOGICO obs
+
+    NAMEDEVICE      shift and go to state 21
+
+    obs                            shift and go to state 51
+
+state 47
+
+    (26) act -> ENVIAR ALERTA ( MSG ) . NAMEDEVICE
+    (28) act -> ENVIAR ALERTA ( MSG ) . PARA TODOS : dev_list
+
+    NAMEDEVICE      shift and go to state 52
+    PARA            shift and go to state 53
+
+
+state 48
+
+    (27) act -> ENVIAR ALERTA ( MSG , . NAMEDEVICE ) NAMEDEVICE
+
+    NAMEDEVICE      shift and go to state 54
+
+
+state 49
+
+    (5) device -> DISPOSITIVO : { NAMEDEVICE , NAMEDEVICE . }
+
+    }               shift and go to state 55
+
+
+state 50
+
+    (16) obsact -> SE obs ENTAO act SENAO act .
+
+    .               reduce using rule 16 (obsact -> SE obs ENTAO act SENAO act .)
+
+
+state 51
+
+    (18) obs -> NAMEDEVICE oplogic var E_LOGICO obs .
+
+    ENTAO           reduce using rule 18 (obs -> NAMEDEVICE oplogic var E_LOGICO obs .)
+
+
+state 52
+
+    (26) act -> ENVIAR ALERTA ( MSG ) NAMEDEVICE .
+
+    .               reduce using rule 26 (act -> ENVIAR ALERTA ( MSG ) NAMEDEVICE .)
+    SENAO           reduce using rule 26 (act -> ENVIAR ALERTA ( MSG ) NAMEDEVICE .)
+
+
+state 53
+
+    (28) act -> ENVIAR ALERTA ( MSG ) PARA . TODOS : dev_list
+
+    TODOS           shift and go to state 56
+
+
+state 54
+
+    (27) act -> ENVIAR ALERTA ( MSG , NAMEDEVICE . ) NAMEDEVICE
+
+    )               shift and go to state 57
+
+
+state 55
+
+    (5) device -> DISPOSITIVO : { NAMEDEVICE , NAMEDEVICE } .
+
+    DISPOSITIVO     reduce using rule 5 (device -> DISPOSITIVO : { NAMEDEVICE , NAMEDEVICE } .)
+    SET             reduce using rule 5 (device -> DISPOSITIVO : { NAMEDEVICE , NAMEDEVICE } .)
+    SE              reduce using rule 5 (device -> DISPOSITIVO : { NAMEDEVICE , NAMEDEVICE } .)
+    ENVIAR          reduce using rule 5 (device -> DISPOSITIVO : { NAMEDEVICE , NAMEDEVICE } .)
+    LIGAR           reduce using rule 5 (device -> DISPOSITIVO : { NAMEDEVICE , NAMEDEVICE } .)
+    DESLIGAR        reduce using rule 5 (device -> DISPOSITIVO : { NAMEDEVICE , NAMEDEVICE } .)
+    $end            reduce using rule 5 (device -> DISPOSITIVO : { NAMEDEVICE , NAMEDEVICE } .)
+
+
+state 56
+
+    (28) act -> ENVIAR ALERTA ( MSG ) PARA TODOS . : dev_list
+
+    :               shift and go to state 58
+
+
+state 57
+
+    (27) act -> ENVIAR ALERTA ( MSG , NAMEDEVICE ) . NAMEDEVICE
+
+    NAMEDEVICE      shift and go to state 59
+
+
+state 58
+
+    (28) act -> ENVIAR ALERTA ( MSG ) PARA TODOS : . dev_list
+    (29) dev_list -> . NAMEDEVICE , dev_list
+    (30) dev_list -> . NAMEDEVICE
+
+    NAMEDEVICE      shift and go to state 61
+
+    dev_list                       shift and go to state 60
+
+state 59
+
+    (27) act -> ENVIAR ALERTA ( MSG , NAMEDEVICE ) NAMEDEVICE .
+
+    .               reduce using rule 27 (act -> ENVIAR ALERTA ( MSG , NAMEDEVICE ) NAMEDEVICE .)
+    SENAO           reduce using rule 27 (act -> ENVIAR ALERTA ( MSG , NAMEDEVICE ) NAMEDEVICE .)
+
+
+state 60
+
+    (28) act -> ENVIAR ALERTA ( MSG ) PARA TODOS : dev_list .
+
+    .               reduce using rule 28 (act -> ENVIAR ALERTA ( MSG ) PARA TODOS : dev_list .)
+    SENAO           reduce using rule 28 (act -> ENVIAR ALERTA ( MSG ) PARA TODOS : dev_list .)
+
+
+state 61
+
+    (29) dev_list -> NAMEDEVICE . , dev_list
+    (30) dev_list -> NAMEDEVICE .
+
+    ,               shift and go to state 62
+    .               reduce using rule 30 (dev_list -> NAMEDEVICE .)
+    SENAO           reduce using rule 30 (dev_list -> NAMEDEVICE .)
+
+
+state 62
+
+    (29) dev_list -> NAMEDEVICE , . dev_list
+    (29) dev_list -> . NAMEDEVICE , dev_list
+    (30) dev_list -> . NAMEDEVICE
+
+    NAMEDEVICE      shift and go to state 61
+
+    dev_list                       shift and go to state 63
+
+state 63
+
+    (29) dev_list -> NAMEDEVICE , dev_list .
+
+    .               reduce using rule 29 (dev_list -> NAMEDEVICE , dev_list .)
+    SENAO           reduce using rule 29 (dev_list -> NAMEDEVICE , dev_list .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: reduce/reduce conflict in state 18 resolved using rule (cmds -> cmd .)
+WARNING: rejected rule (cmds -> <empty>) in state 18
