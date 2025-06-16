@@ -1,32 +1,20 @@
 import ply.lex as lex
 
-# Lista de nomes dos tokens. Isso é obrigatório.
 tokens = [
-    'NAMEDEVICE', 'MSG', 'NUM', 'BOOL',
+    'NAMEDEVICE', 'MSG', 'NUM',
     'MAIOR_IGUAL', 'MENOR_IGUAL', 'IGUAL_IGUAL', 'DIFERENTE',
-    'E_LOGICO',
-    'GT', 'LT'
+    'E_LOGICO', 'GT', 'LT'
 ]
 
 reserved = {
-    'dispositivo': 'DISPOSITIVO',
-    'set': 'SET',
-    'se': 'SE',
-    'entao': 'ENTAO',
-    'senao': 'SENAO',
-    'enviar': 'ENVIAR',
-    'alerta': 'ALERTA',
-    'ligar': 'LIGAR',
-    'desligar': 'DESLIGAR',
-    'para': 'PARA',
-    'todos': 'TODOS',
-    'TRUE': 'BOOL',
-    'FALSE': 'BOOL'
+    'dispositivo': 'DISPOSITIVO', 'set': 'SET', 'se': 'SE', 'entao': 'ENTAO',
+    'senao': 'SENAO', 'enviar': 'ENVIAR', 'alerta': 'ALERTA', 'ligar': 'LIGAR',
+    'desligar': 'DESLIGAR', 'para': 'PARA', 'todos': 'TODOS',
+    'TRUE': 'BOOL', 'FALSE': 'BOOL'
 }
 
-tokens = tokens + list(reserved.values())
+tokens = tokens + list(set(reserved.values()))
 
-# Expressões regulares simples para tokens
 t_MAIOR_IGUAL = r'>='
 t_MENOR_IGUAL = r'<='
 t_IGUAL_IGUAL = r'=='
@@ -35,44 +23,29 @@ t_E_LOGICO = r'&&'
 t_GT = r'>'
 t_LT = r'<'
 t_ignore = ' \t'
-
-# Literais de um único caractere
 literals = ['{', '}', ',', '=', '.', '(', ')', ':']
 
-# Regra para números inteiros não negativos
 def t_NUM(t):
     r'\d+'
     t.value = int(t.value)
     return t
 
-# Regra para MSG (strings entre aspas)
 def t_MSG(t):
     r'\"([^\\\n]|(\\.))*?\"'
-    t.value = t.value[1:-1] # Remove as aspas
+    t.value = t.value[1:-1]
     return t
 
-# Regra para NAMEDEVICE e OBSERVATION (e palavras-chave)
-# namedevice só pode conter letras 
-# observation é uma string 
 def t_NAMEDEVICE(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
-    t.type = reserved.get(t.value, 'NAMEDEVICE') # Checa por palavras reservadas
-    if t.type == 'NAMEDEVICE':
-        # Na gramática, 'observation' tem a mesma forma de um identificador.
-        # Vamos tratar ambos como NAMEDEVICE por enquanto e diferenciar no parser.
-        # Para simplificar, podemos renomear este token para IDENTIFIER se preferir.
-        pass
+    t.type = reserved.get(t.value, 'NAMEDEVICE')
     return t
 
-# Regra para lidar com novas linhas
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
 
-# Regra para tratamento de erros
 def t_error(t):
     print(f"Caractere ilegal '{t.value[0]}'")
     t.lexer.skip(1)
 
-# Constrói o lexer
 lexer = lex.lex()

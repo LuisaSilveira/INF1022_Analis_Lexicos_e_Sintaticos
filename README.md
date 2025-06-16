@@ -4,3 +4,4 @@ Trabalho Final da Matéria Analisadores Léxicos e Sintáticos da Universidade P
 # Setup do codigo
 - python -m venv .venv
 - .venv/Scripts/activate
+- pip install -r requirements

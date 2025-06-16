@@ -1,0 +1,5 @@
+dispositivo : { Monitor, monitor }
+dispositivo : { Celular, celular }
+dispositivo : { Termometro , temperatura }
+set temperatura = 40.
+se temperatura > 30 entao enviar alerta (" Temperatura em " , temperatura ) para todos : monitor , celular .
