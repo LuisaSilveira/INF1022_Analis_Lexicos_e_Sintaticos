@@ -52,21 +52,28 @@ def p_cmds_empty(p):
 # --- Rules for 'cmd' (replaces 'cmd : attrib | obsact | act') ---
 def p_cmd_attrib(p):
     'cmd : attrib'
-    p[0] = p[1] if isinstance(p[1], list) else [p[1]]
+    p[0] = p[1]
+
 def p_cmd_obsact(p):
     'cmd : obsact'
-    p[0] = p[1] if isinstance(p[1], list) else [p[1]]
+    p[0] = p[1]
+
 def p_cmd_act(p):
     'cmd : act'
-    p[0] = p[1] if isinstance(p[1], list) else [p[1]]
+    p[0] = p[1]
 
+# Mude esta função em parser_c.py
 def p_attrib(p):
     'attrib : SET NAMEDEVICE "=" var'
     obs_name, value = p[2], p[4]
     if obs_name in symbol_table['observations']:
         symbol_table['observations'][obs_name] = value
-        p[0] = f'    {obs_name} = {value};'
-    else: print(f"Erro Semântico: Observation '{obs_name}' não declarada."); p[0] = ''
+        # ANTES: retornava uma string
+        # AGORA: retorna uma LISTA
+        p[0] = [f'    {obs_name} = {value};']
+    else: 
+        print(f"Erro Semântico: Observation '{obs_name}' não declarada.")
+        p[0] = ['']
 
 # --- Rules for 'var' (replaces 'var : NUM | BOOL') ---
 def p_var_num(p):
@@ -76,12 +83,19 @@ def p_var_bool(p):
     'var : BOOL'
     p[0] = 'true' if p[1] == 'TRUE' else 'false'
 
+# Mude estas duas funções em parser_c.py
+
 def p_obsact_if(p):
     'obsact : SE obs ENTAO act'
-    p[0] = f'    if ({p[2]}) {{\n' + '\n'.join(p[4]) + '\n    }'
+    # ANTES: retornava uma string
+    # AGORA: Envolve a string em colchetes para retornar uma LISTA
+    p[0] = [f'    if ({p[2]}) {{\n' + '\n'.join(p[4]) + '\n    }']
+
 def p_obsact_if_else(p):
     'obsact : SE obs ENTAO act SENAO act'
-    p[0] = f'    if ({p[2]}) {{\n' + '\n'.join(p[4]) + '\n    }} else {{\n' + '\n'.join(p[6]) + '\n    }}'
+    # ANTES: retornava uma string
+    # AGORA: Envolve a string em colchetes para retornar uma LISTA
+    p[0] = [f'    if ({p[2]}) {{\n' + '\n'.join(p[4]) + '\n    }} else {{\n' + '\n'.join(p[6]) + '\n    }}']
 
 def p_obs(p):
     'obs : NAMEDEVICE oplogic var'

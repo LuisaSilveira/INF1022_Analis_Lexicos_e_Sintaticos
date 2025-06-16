@@ -13,5 +13,14 @@ void alerta(char* namedevice, char* msg) { printf("%s recebeu o alerta: %s\n", n
 void alerta_obs(char* namedevice, char* msg, int obs_val) { printf("%s recebeu o alerta: %s %d\n", namedevice, msg, obs_val); }
 
 int main() {
+    potencia = 100;
+    if (umidade < 40) {
+        alerta("Monitor", " Ar seco detectado ");
+    }
+    if (movimento == true) {
+        ligar("lampada");
+    }} else {{
+        desligar("lampada");
+    }}
     return 0;
 }
