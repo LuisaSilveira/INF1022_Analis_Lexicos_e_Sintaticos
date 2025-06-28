@@ -1,6 +1,6 @@
 {
     "files.associations": {
         "*.ejs": "html",
-        "*.obsact": "c"
+        "*.obsact": "plaintext"
     }
 }

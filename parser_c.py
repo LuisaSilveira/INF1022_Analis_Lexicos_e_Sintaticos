@@ -19,7 +19,7 @@ c_code_main_body = []
 def p_program(p):
     'program : devices cmds'
     global c_code_main_body
-    c_code_main_body = p[2]
+    c_code_main_body = p[2] if p[2] is not None else []
 
 def p_devices_list(p):
     'devices : device devices'
@@ -95,7 +95,7 @@ def p_obsact_if_else(p):
     'obsact : SE obs ENTAO act SENAO act'
     # ANTES: retornava uma string
     # AGORA: Envolve a string em colchetes para retornar uma LISTA
-    p[0] = [f'    if ({p[2]}) {{\n' + '\n'.join(p[4]) + '\n    }} else {{\n' + '\n'.join(p[6]) + '\n    }}']
+    p[0] = [f'    if ({p[2]}) {{\n' + '\n'.join(p[4]) + '\n    } else {\n' + '\n'.join(p[6]) + '\n    }']
 
 def p_obs(p):
     'obs : NAMEDEVICE oplogic var'
@@ -131,8 +131,8 @@ def p_act_broadcast_with_obs(p):
 def p_dev_list_multiple(p): 'dev_list : NAMEDEVICE "," dev_list'; p[0] = [p[1]] + p[3]
 def p_dev_list_single(p): 'dev_list : NAMEDEVICE'; p[0] = [p[1]]
 
-def p_action_ligar(p): 'action : LIGAR'; p[0] = p[1]
-def p_action_desligar(p): 'action : DESLIGAR'; p[0] = p[1]
+def p_action_ligar(p): 'action : LIGAR'; p[0] = 'ligar'
+def p_action_desligar(p): 'action : DESLIGAR'; p[0] = 'desligar'
 
 def p_error(p):
     if p: print(f"Erro de sintaxe em '{p.value}' na linha {p.lineno}")

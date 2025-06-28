@@ -19,8 +19,8 @@ int main() {
     }
     if (movimento == true) {
         ligar("lampada");
-    }} else {{
+    } else {
         desligar("lampada");
-    }}
+    }
     return 0;
 }
