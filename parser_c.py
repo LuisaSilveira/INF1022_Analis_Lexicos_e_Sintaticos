@@ -14,12 +14,22 @@ c_code_helpers = [
 c_code_globals = ['// Variaveis globais para observations']
 c_code_main_body = []
 
+# Para consertar ambiguoidade por causa da mudanca de ter cmd
+
+precedence = (
+    ('right', 'ENTAO'),
+    ('right', 'SENAO'),
+)
+
 # --- Grammar Rules ---
 
 def p_program(p):
     'program : devices cmds'
     global c_code_main_body
-    c_code_main_body = p[2] if p[2] is not None else []
+    # O Clear limpa o corpo principal para execuções múltiplas se necessário
+    c_code_main_body.clear() 
+    c_code_main_body.extend(p[2] if p[2] is not None else [])
+
 
 def p_devices_list(p):
     'devices : device devices'
@@ -68,8 +78,6 @@ def p_attrib(p):
     obs_name, value = p[2], p[4]
     if obs_name in symbol_table['observations']:
         symbol_table['observations'][obs_name] = value
-        # ANTES: retornava uma string
-        # AGORA: retorna uma LISTA
         p[0] = [f'    {obs_name} = {value};']
     else: 
         print(f"Erro Semântico: Observation '{obs_name}' não declarada.")
@@ -86,16 +94,33 @@ def p_var_bool(p):
 # Mude estas duas funções em parser_c.py
 
 def p_obsact_if(p):
-    'obsact : SE obs ENTAO act'
-    # ANTES: retornava uma string
-    # AGORA: Envolve a string em colchetes para retornar uma LISTA
-    p[0] = [f'    if ({p[2]}) {{\n' + '\n'.join(p[4]) + '\n    }']
+    'obsact : SE obs ENTAO cmd'
+    # p[4] é a lista de linhas de código do comando filho.
+    # Adicionamos 4 espaços a cada linha para criar o recuo do novo bloco.
+    indented_block = ['    ' + line for line in p[4]]
+    
+    # Construímos a saída como uma LISTA de linhas, não como uma string única.
+    # Isso permite que os pais na árvore de análise também possam indentar este bloco.
+    result = []
+    result.append(f'    if ({p[2]}) {{')
+    result.extend(indented_block)
+    result.append('    }')
+    p[0] = result
 
 def p_obsact_if_else(p):
-    'obsact : SE obs ENTAO act SENAO act'
-    # ANTES: retornava uma string
-    # AGORA: Envolve a string em colchetes para retornar uma LISTA
-    p[0] = [f'    if ({p[2]}) {{\n' + '\n'.join(p[4]) + '\n    } else {\n' + '\n'.join(p[6]) + '\n    }']
+    'obsact : SE obs ENTAO cmd SENAO cmd'
+    # Indentamos os blocos 'then' e 'else' separadamente.
+    indented_then = ['    ' + line for line in p[4]]
+    indented_else = ['    ' + line for line in p[6]]
+    
+    # Construímos a saída como uma lista de linhas.
+    result = []
+    result.append(f'    if ({p[2]}) {{')
+    result.extend(indented_then)
+    result.append('    } else {')
+    result.extend(indented_else)
+    result.append('    }')
+    p[0] = result
 
 def p_obs(p):
     'obs : NAMEDEVICE oplogic var'
@@ -114,19 +139,19 @@ def p_oplogic_ne(p): 'oplogic : DIFERENTE'; p[0] = p[1]
 
 def p_act_action(p):
     'act : action NAMEDEVICE'
-    p[0] = [f'        {p[1]}("{p[2]}");']
+    p[0] = [f'    {p[1]}("{p[2]}");']
 def p_act_alerta_msg(p):
     'act : ENVIAR ALERTA "(" MSG ")" NAMEDEVICE'
-    p[0] = [f'        alerta("{p[6]}", "{p[4]}");']
+    p[0] = [f'    alerta("{p[6]}", "{p[4]}");']
 def p_act_alerta_obs(p):
     'act : ENVIAR ALERTA "(" MSG "," NAMEDEVICE ")" NAMEDEVICE'
-    p[0] = [f'        alerta_obs("{p[8]}", "{p[4]}", {p[6]});']
+    p[0] = [f'    alerta_obs("{p[8]}", "{p[4]}", {p[6]});']
 def p_act_broadcast(p):
     'act : ENVIAR ALERTA "(" MSG ")" PARA TODOS ":" dev_list'
-    p[0] = [f'        alerta("{dev}", "{p[4]}");' for dev in p[9]]
+    p[0] = [f'    alerta("{dev}", "{p[4]}");' for dev in p[9]]
 def p_act_broadcast_with_obs(p):
     'act : ENVIAR ALERTA "(" MSG "," NAMEDEVICE ")" PARA TODOS ":" dev_list'
-    p[0] = [f'        alerta_obs("{dev}", "{p[4]}", {p[6]});' for dev in p[11]]
+    p[0] = [f'    alerta_obs("{dev}", "{p[4]}", {p[6]});' for dev in p[11]]
 
 def p_dev_list_multiple(p): 'dev_list : NAMEDEVICE "," dev_list'; p[0] = [p[1]] + p[3]
 def p_dev_list_single(p): 'dev_list : NAMEDEVICE'; p[0] = [p[1]]

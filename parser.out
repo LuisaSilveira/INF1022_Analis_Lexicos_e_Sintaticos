@@ -16,8 +16,8 @@ Rule 10    cmd -> act
 Rule 11    attrib -> SET NAMEDEVICE = var
 Rule 12    var -> NUM
 Rule 13    var -> BOOL
-Rule 14    obsact -> SE obs ENTAO act
-Rule 15    obsact -> SE obs ENTAO act SENAO act
+Rule 14    obsact -> SE obs ENTAO cmd
+Rule 15    obsact -> SE obs ENTAO cmd SENAO cmd
 Rule 16    obs -> NAMEDEVICE oplogic var
 Rule 17    obs -> NAMEDEVICE oplogic var E_LOGICO obs
 Rule 18    oplogic -> GT
@@ -72,10 +72,10 @@ error                :
 
 Nonterminals, with rules where they appear
 
-act                  : 10 14 15 15
+act                  : 10
 action               : 24
 attrib               : 8
-cmd                  : 6
+cmd                  : 6 14 15 15
 cmds                 : 1 6
 dev_list             : 27 28 29
 device               : 2 3
@@ -118,8 +118,8 @@ state 2
     (9) cmd -> . obsact
     (10) cmd -> . act
     (11) attrib -> . SET NAMEDEVICE = var
-    (14) obsact -> . SE obs ENTAO act
-    (15) obsact -> . SE obs ENTAO act SENAO act
+    (14) obsact -> . SE obs ENTAO cmd
+    (15) obsact -> . SE obs ENTAO cmd SENAO cmd
     (24) act -> . action NAMEDEVICE
     (25) act -> . ENVIAR ALERTA ( MSG ) NAMEDEVICE
     (26) act -> . ENVIAR ALERTA ( MSG , NAMEDEVICE ) NAMEDEVICE
@@ -189,6 +189,7 @@ state 7
     (8) cmd -> attrib .
 
     .               reduce using rule 8 (cmd -> attrib .)
+    SENAO           reduce using rule 8 (cmd -> attrib .)
 
 
 state 8
@@ -196,6 +197,7 @@ state 8
     (9) cmd -> obsact .
 
     .               reduce using rule 9 (cmd -> obsact .)
+    SENAO           reduce using rule 9 (cmd -> obsact .)
 
 
 state 9
@@ -203,6 +205,7 @@ state 9
     (10) cmd -> act .
 
     .               reduce using rule 10 (cmd -> act .)
+    SENAO           reduce using rule 10 (cmd -> act .)
 
 
 state 10
@@ -214,8 +217,8 @@ state 10
 
 state 11
 
-    (14) obsact -> SE . obs ENTAO act
-    (15) obsact -> SE . obs ENTAO act SENAO act
+    (14) obsact -> SE . obs ENTAO cmd
+    (15) obsact -> SE . obs ENTAO cmd SENAO cmd
     (16) obs -> . NAMEDEVICE oplogic var
     (17) obs -> . NAMEDEVICE oplogic var E_LOGICO obs
 
@@ -283,8 +286,8 @@ state 18
     (9) cmd -> . obsact
     (10) cmd -> . act
     (11) attrib -> . SET NAMEDEVICE = var
-    (14) obsact -> . SE obs ENTAO act
-    (15) obsact -> . SE obs ENTAO act SENAO act
+    (14) obsact -> . SE obs ENTAO cmd
+    (15) obsact -> . SE obs ENTAO cmd SENAO cmd
     (24) act -> . action NAMEDEVICE
     (25) act -> . ENVIAR ALERTA ( MSG ) NAMEDEVICE
     (26) act -> . ENVIAR ALERTA ( MSG , NAMEDEVICE ) NAMEDEVICE
@@ -316,8 +319,8 @@ state 19
 
 state 20
 
-    (14) obsact -> SE obs . ENTAO act
-    (15) obsact -> SE obs . ENTAO act SENAO act
+    (14) obsact -> SE obs . ENTAO cmd
+    (15) obsact -> SE obs . ENTAO cmd SENAO cmd
 
     ENTAO           shift and go to state 27
 
@@ -388,8 +391,14 @@ state 26
 
 state 27
 
-    (14) obsact -> SE obs ENTAO . act
-    (15) obsact -> SE obs ENTAO . act SENAO act
+    (14) obsact -> SE obs ENTAO . cmd
+    (15) obsact -> SE obs ENTAO . cmd SENAO cmd
+    (8) cmd -> . attrib
+    (9) cmd -> . obsact
+    (10) cmd -> . act
+    (11) attrib -> . SET NAMEDEVICE = var
+    (14) obsact -> . SE obs ENTAO cmd
+    (15) obsact -> . SE obs ENTAO cmd SENAO cmd
     (24) act -> . action NAMEDEVICE
     (25) act -> . ENVIAR ALERTA ( MSG ) NAMEDEVICE
     (26) act -> . ENVIAR ALERTA ( MSG , NAMEDEVICE ) NAMEDEVICE
@@ -398,11 +407,16 @@ state 27
     (31) action -> . LIGAR
     (32) action -> . DESLIGAR
 
+    SET             shift and go to state 10
+    SE              shift and go to state 11
     ENVIAR          shift and go to state 13
     LIGAR           shift and go to state 14
     DESLIGAR        shift and go to state 15
 
-    act                            shift and go to state 40
+    cmd                            shift and go to state 40
+    attrib                         shift and go to state 7
+    obsact                         shift and go to state 8
+    act                            shift and go to state 9
     action                         shift and go to state 12
 
 state 28
@@ -489,6 +503,7 @@ state 37
     (11) attrib -> SET NAMEDEVICE = var .
 
     .               reduce using rule 11 (attrib -> SET NAMEDEVICE = var .)
+    SENAO           reduce using rule 11 (attrib -> SET NAMEDEVICE = var .)
 
 
 state 38
@@ -496,6 +511,7 @@ state 38
     (12) var -> NUM .
 
     .               reduce using rule 12 (var -> NUM .)
+    SENAO           reduce using rule 12 (var -> NUM .)
     E_LOGICO        reduce using rule 12 (var -> NUM .)
     ENTAO           reduce using rule 12 (var -> NUM .)
 
@@ -505,17 +521,20 @@ state 39
     (13) var -> BOOL .
 
     .               reduce using rule 13 (var -> BOOL .)
+    SENAO           reduce using rule 13 (var -> BOOL .)
     E_LOGICO        reduce using rule 13 (var -> BOOL .)
     ENTAO           reduce using rule 13 (var -> BOOL .)
 
 
 state 40
 
-    (14) obsact -> SE obs ENTAO act .
-    (15) obsact -> SE obs ENTAO act . SENAO act
+    (14) obsact -> SE obs ENTAO cmd .
+    (15) obsact -> SE obs ENTAO cmd . SENAO cmd
 
-    .               reduce using rule 14 (obsact -> SE obs ENTAO act .)
+    .               reduce using rule 14 (obsact -> SE obs ENTAO cmd .)
     SENAO           shift and go to state 45
+
+  ! SENAO           [ reduce using rule 14 (obsact -> SE obs ENTAO cmd .) ]
 
 
 state 41
@@ -560,7 +579,13 @@ state 44
 
 state 45
 
-    (15) obsact -> SE obs ENTAO act SENAO . act
+    (15) obsact -> SE obs ENTAO cmd SENAO . cmd
+    (8) cmd -> . attrib
+    (9) cmd -> . obsact
+    (10) cmd -> . act
+    (11) attrib -> . SET NAMEDEVICE = var
+    (14) obsact -> . SE obs ENTAO cmd
+    (15) obsact -> . SE obs ENTAO cmd SENAO cmd
     (24) act -> . action NAMEDEVICE
     (25) act -> . ENVIAR ALERTA ( MSG ) NAMEDEVICE
     (26) act -> . ENVIAR ALERTA ( MSG , NAMEDEVICE ) NAMEDEVICE
@@ -569,11 +594,16 @@ state 45
     (31) action -> . LIGAR
     (32) action -> . DESLIGAR
 
+    SET             shift and go to state 10
+    SE              shift and go to state 11
     ENVIAR          shift and go to state 13
     LIGAR           shift and go to state 14
     DESLIGAR        shift and go to state 15
 
-    act                            shift and go to state 50
+    cmd                            shift and go to state 50
+    attrib                         shift and go to state 7
+    obsact                         shift and go to state 8
+    act                            shift and go to state 9
     action                         shift and go to state 12
 
 state 46
@@ -612,9 +642,10 @@ state 49
 
 state 50
 
-    (15) obsact -> SE obs ENTAO act SENAO act .
+    (15) obsact -> SE obs ENTAO cmd SENAO cmd .
 
-    .               reduce using rule 15 (obsact -> SE obs ENTAO act SENAO act .)
+    .               reduce using rule 15 (obsact -> SE obs ENTAO cmd SENAO cmd .)
+    SENAO           reduce using rule 15 (obsact -> SE obs ENTAO cmd SENAO cmd .)
 
 
 state 51

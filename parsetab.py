@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'ALERTA BOOL DESLIGAR DIFERENTE DISPOSITIVO ENTAO ENVIAR E_LOGICO GT IGUAL_IGUAL LIGAR LT MAIOR_IGUAL MENOR_IGUAL MSG NAMEDEVICE NUM PARA SE SENAO SET TODOSprogram : devices cmdsdevices : device devicesdevices : devicedevice : DISPOSITIVO ":" "{" NAMEDEVICE "}"device : DISPOSITIVO ":" "{" NAMEDEVICE "," NAMEDEVICE "}"cmds : cmd "." cmdscmds : cmd : attribcmd : obsactcmd : actattrib : SET NAMEDEVICE "=" varvar : NUMvar : BOOLobsact : SE obs ENTAO actobsact : SE obs ENTAO act SENAO actobs : NAMEDEVICE oplogic varobs : NAMEDEVICE oplogic var E_LOGICO obsoplogic : GToplogic : LToplogic : MAIOR_IGUALoplogic : MENOR_IGUALoplogic : IGUAL_IGUALoplogic : DIFERENTEact : action NAMEDEVICEact : ENVIAR ALERTA "(" MSG ")" NAMEDEVICEact : ENVIAR ALERTA "(" MSG "," NAMEDEVICE ")" NAMEDEVICEact : ENVIAR ALERTA "(" MSG ")" PARA TODOS ":" dev_listact : ENVIAR ALERTA "(" MSG "," NAMEDEVICE ")" PARA TODOS ":" dev_listdev_list : NAMEDEVICE "," dev_listdev_list : NAMEDEVICEaction : LIGARaction : DESLIGAR'
+_lr_signature = 'rightENTAOrightSENAOALERTA BOOL DESLIGAR DIFERENTE DISPOSITIVO ENTAO ENVIAR E_LOGICO GT IGUAL_IGUAL LIGAR LT MAIOR_IGUAL MENOR_IGUAL MSG NAMEDEVICE NUM PARA SE SENAO SET TODOSprogram : devices cmdsdevices : device devicesdevices : devicedevice : DISPOSITIVO ":" "{" NAMEDEVICE "}"device : DISPOSITIVO ":" "{" NAMEDEVICE "," NAMEDEVICE "}"cmds : cmd "." cmdscmds : cmd : attribcmd : obsactcmd : actattrib : SET NAMEDEVICE "=" varvar : NUMvar : BOOLobsact : SE obs ENTAO cmdobsact : SE obs ENTAO cmd SENAO cmdobs : NAMEDEVICE oplogic varobs : NAMEDEVICE oplogic var E_LOGICO obsoplogic : GToplogic : LToplogic : MAIOR_IGUALoplogic : MENOR_IGUALoplogic : IGUAL_IGUALoplogic : DIFERENTEact : action NAMEDEVICEact : ENVIAR ALERTA "(" MSG ")" NAMEDEVICEact : ENVIAR ALERTA "(" MSG "," NAMEDEVICE ")" NAMEDEVICEact : ENVIAR ALERTA "(" MSG ")" PARA TODOS ":" dev_listact : ENVIAR ALERTA "(" MSG "," NAMEDEVICE ")" PARA TODOS ":" dev_listdev_list : NAMEDEVICE "," dev_listdev_list : NAMEDEVICEaction : LIGARaction : DESLIGAR'
     
-_lr_action_items = {'DISPOSITIVO':([0,3,43,55,],[4,4,-4,-5,]),'$end':([1,2,3,5,16,18,25,43,55,],[0,-7,-3,-1,-2,-7,-6,-4,-5,]),'SET':([2,3,16,18,43,55,],[10,-3,-2,10,-4,-5,]),'SE':([2,3,16,18,43,55,],[11,-3,-2,11,-4,-5,]),'ENVIAR':([2,3,16,18,27,43,45,55,],[13,-3,-2,13,13,-4,13,-5,]),'LIGAR':([2,3,16,18,27,43,45,55,],[14,-3,-2,14,14,-4,14,-5,]),'DESLIGAR':([2,3,16,18,27,43,45,55,],[15,-3,-2,15,15,-4,15,-5,]),':':([4,56,63,],[17,58,65,]),'.':([6,7,8,9,22,37,38,39,40,50,52,59,61,62,66,67,],[18,-8,-9,-10,-24,-11,-12,-13,-14,-15,-25,-26,-27,-30,-29,-28,]),'NAMEDEVICE':([10,11,12,14,15,24,44,46,47,48,57,58,64,65,],[19,21,22,-31,-32,36,49,21,52,54,59,62,62,62,]),'ALERTA':([13,],[23,]),'{':([17,],[24,]),'=':([19,],[26,]),'ENTAO':([20,38,39,41,51,],[27,-12,-13,-16,-17,]),'GT':([21,],[29,]),'LT':([21,],[30,]),'MAIOR_IGUAL':([21,],[31,]),'MENOR_IGUAL':([21,],[32,]),'IGUAL_IGUAL':([21,],[33,]),'DIFERENTE':([21,],[34,]),'SENAO':([22,40,52,59,61,62,66,67,],[-24,45,-25,-26,-27,-30,-29,-28,]),'(':([23,],[35,]),'NUM':([26,28,29,30,31,32,33,34,],[38,38,-18,-19,-20,-21,-22,-23,]),'BOOL':([26,28,29,30,31,32,33,34,],[39,39,-18,-19,-20,-21,-22,-23,]),'MSG':([35,],[42,]),'}':([36,49,],[43,55,]),',':([36,42,62,],[44,48,64,]),'E_LOGICO':([38,39,41,],[-12,-13,46,]),')':([42,54,],[47,57,]),'PARA':([47,57,],[53,60,]),'TODOS':([53,60,],[56,63,]),}
+_lr_action_items = {'DISPOSITIVO':([0,3,43,55,],[4,4,-4,-5,]),'$end':([1,2,3,5,16,18,25,43,55,],[0,-7,-3,-1,-2,-7,-6,-4,-5,]),'SET':([2,3,16,18,27,43,45,55,],[10,-3,-2,10,10,-4,10,-5,]),'SE':([2,3,16,18,27,43,45,55,],[11,-3,-2,11,11,-4,11,-5,]),'ENVIAR':([2,3,16,18,27,43,45,55,],[13,-3,-2,13,13,-4,13,-5,]),'LIGAR':([2,3,16,18,27,43,45,55,],[14,-3,-2,14,14,-4,14,-5,]),'DESLIGAR':([2,3,16,18,27,43,45,55,],[15,-3,-2,15,15,-4,15,-5,]),':':([4,56,63,],[17,58,65,]),'.':([6,7,8,9,22,37,38,39,40,50,52,59,61,62,66,67,],[18,-8,-9,-10,-24,-11,-12,-13,-14,-15,-25,-26,-27,-30,-29,-28,]),'SENAO':([7,8,9,22,37,38,39,40,50,52,59,61,62,66,67,],[-8,-9,-10,-24,-11,-12,-13,45,-15,-25,-26,-27,-30,-29,-28,]),'NAMEDEVICE':([10,11,12,14,15,24,44,46,47,48,57,58,64,65,],[19,21,22,-31,-32,36,49,21,52,54,59,62,62,62,]),'ALERTA':([13,],[23,]),'{':([17,],[24,]),'=':([19,],[26,]),'ENTAO':([20,38,39,41,51,],[27,-12,-13,-16,-17,]),'GT':([21,],[29,]),'LT':([21,],[30,]),'MAIOR_IGUAL':([21,],[31,]),'MENOR_IGUAL':([21,],[32,]),'IGUAL_IGUAL':([21,],[33,]),'DIFERENTE':([21,],[34,]),'(':([23,],[35,]),'NUM':([26,28,29,30,31,32,33,34,],[38,38,-18,-19,-20,-21,-22,-23,]),'BOOL':([26,28,29,30,31,32,33,34,],[39,39,-18,-19,-20,-21,-22,-23,]),'MSG':([35,],[42,]),'}':([36,49,],[43,55,]),',':([36,42,62,],[44,48,64,]),'E_LOGICO':([38,39,41,],[-12,-13,46,]),')':([42,54,],[47,57,]),'PARA':([47,57,],[53,60,]),'TODOS':([53,60,],[56,63,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'program':([0,],[1,]),'devices':([0,3,],[2,16,]),'device':([0,3,],[3,3,]),'cmds':([2,18,],[5,25,]),'cmd':([2,18,],[6,6,]),'attrib':([2,18,],[7,7,]),'obsact':([2,18,],[8,8,]),'act':([2,18,27,45,],[9,9,40,50,]),'action':([2,18,27,45,],[12,12,12,12,]),'obs':([11,46,],[20,51,]),'oplogic':([21,],[28,]),'var':([26,28,],[37,41,]),'dev_list':([58,64,65,],[61,66,67,]),}
+_lr_goto_items = {'program':([0,],[1,]),'devices':([0,3,],[2,16,]),'device':([0,3,],[3,3,]),'cmds':([2,18,],[5,25,]),'cmd':([2,18,27,45,],[6,6,40,50,]),'attrib':([2,18,27,45,],[7,7,7,7,]),'obsact':([2,18,27,45,],[8,8,8,8,]),'act':([2,18,27,45,],[9,9,9,9,]),'action':([2,18,27,45,],[12,12,12,12,]),'obs':([11,46,],[20,51,]),'oplogic':([21,],[28,]),'var':([26,28,],[37,41,]),'dev_list':([58,64,65,],[61,66,67,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,36 +27,36 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> program","S'",1,None,None,None),
-  ('program -> devices cmds','program',2,'p_program','parser_c.py',20),
-  ('devices -> device devices','devices',2,'p_devices_list','parser_c.py',25),
-  ('devices -> device','devices',1,'p_devices_single','parser_c.py',30),
-  ('device -> DISPOSITIVO : { NAMEDEVICE }','device',5,'p_device_simple','parser_c.py',35),
-  ('device -> DISPOSITIVO : { NAMEDEVICE , NAMEDEVICE }','device',7,'p_device_observation','parser_c.py',38),
-  ('cmds -> cmd . cmds','cmds',3,'p_cmds_list','parser_c.py',46),
-  ('cmds -> <empty>','cmds',0,'p_cmds_empty','parser_c.py',49),
-  ('cmd -> attrib','cmd',1,'p_cmd_attrib','parser_c.py',54),
-  ('cmd -> obsact','cmd',1,'p_cmd_obsact','parser_c.py',58),
-  ('cmd -> act','cmd',1,'p_cmd_act','parser_c.py',62),
-  ('attrib -> SET NAMEDEVICE = var','attrib',4,'p_attrib','parser_c.py',67),
-  ('var -> NUM','var',1,'p_var_num','parser_c.py',80),
-  ('var -> BOOL','var',1,'p_var_bool','parser_c.py',83),
-  ('obsact -> SE obs ENTAO act','obsact',4,'p_obsact_if','parser_c.py',89),
-  ('obsact -> SE obs ENTAO act SENAO act','obsact',6,'p_obsact_if_else','parser_c.py',95),
-  ('obs -> NAMEDEVICE oplogic var','obs',3,'p_obs','parser_c.py',101),
-  ('obs -> NAMEDEVICE oplogic var E_LOGICO obs','obs',5,'p_obs_multiple','parser_c.py',104),
-  ('oplogic -> GT','oplogic',1,'p_oplogic_gt','parser_c.py',109),
-  ('oplogic -> LT','oplogic',1,'p_oplogic_lt','parser_c.py',110),
-  ('oplogic -> MAIOR_IGUAL','oplogic',1,'p_oplogic_ge','parser_c.py',111),
-  ('oplogic -> MENOR_IGUAL','oplogic',1,'p_oplogic_le','parser_c.py',112),
-  ('oplogic -> IGUAL_IGUAL','oplogic',1,'p_oplogic_eq','parser_c.py',113),
-  ('oplogic -> DIFERENTE','oplogic',1,'p_oplogic_ne','parser_c.py',114),
-  ('act -> action NAMEDEVICE','act',2,'p_act_action','parser_c.py',116),
-  ('act -> ENVIAR ALERTA ( MSG ) NAMEDEVICE','act',6,'p_act_alerta_msg','parser_c.py',119),
-  ('act -> ENVIAR ALERTA ( MSG , NAMEDEVICE ) NAMEDEVICE','act',8,'p_act_alerta_obs','parser_c.py',122),
-  ('act -> ENVIAR ALERTA ( MSG ) PARA TODOS : dev_list','act',9,'p_act_broadcast','parser_c.py',125),
-  ('act -> ENVIAR ALERTA ( MSG , NAMEDEVICE ) PARA TODOS : dev_list','act',11,'p_act_broadcast_with_obs','parser_c.py',128),
-  ('dev_list -> NAMEDEVICE , dev_list','dev_list',3,'p_dev_list_multiple','parser_c.py',132),
-  ('dev_list -> NAMEDEVICE','dev_list',1,'p_dev_list_single','parser_c.py',133),
-  ('action -> LIGAR','action',1,'p_action_ligar','parser_c.py',135),
-  ('action -> DESLIGAR','action',1,'p_action_desligar','parser_c.py',136),
+  ('program -> devices cmds','program',2,'p_program','parser_c.py',27),
+  ('devices -> device devices','devices',2,'p_devices_list','parser_c.py',35),
+  ('devices -> device','devices',1,'p_devices_single','parser_c.py',40),
+  ('device -> DISPOSITIVO : { NAMEDEVICE }','device',5,'p_device_simple','parser_c.py',45),
+  ('device -> DISPOSITIVO : { NAMEDEVICE , NAMEDEVICE }','device',7,'p_device_observation','parser_c.py',48),
+  ('cmds -> cmd . cmds','cmds',3,'p_cmds_list','parser_c.py',56),
+  ('cmds -> <empty>','cmds',0,'p_cmds_empty','parser_c.py',59),
+  ('cmd -> attrib','cmd',1,'p_cmd_attrib','parser_c.py',64),
+  ('cmd -> obsact','cmd',1,'p_cmd_obsact','parser_c.py',68),
+  ('cmd -> act','cmd',1,'p_cmd_act','parser_c.py',72),
+  ('attrib -> SET NAMEDEVICE = var','attrib',4,'p_attrib','parser_c.py',77),
+  ('var -> NUM','var',1,'p_var_num','parser_c.py',88),
+  ('var -> BOOL','var',1,'p_var_bool','parser_c.py',91),
+  ('obsact -> SE obs ENTAO cmd','obsact',4,'p_obsact_if','parser_c.py',97),
+  ('obsact -> SE obs ENTAO cmd SENAO cmd','obsact',6,'p_obsact_if_else','parser_c.py',101),
+  ('obs -> NAMEDEVICE oplogic var','obs',3,'p_obs','parser_c.py',107),
+  ('obs -> NAMEDEVICE oplogic var E_LOGICO obs','obs',5,'p_obs_multiple','parser_c.py',110),
+  ('oplogic -> GT','oplogic',1,'p_oplogic_gt','parser_c.py',115),
+  ('oplogic -> LT','oplogic',1,'p_oplogic_lt','parser_c.py',116),
+  ('oplogic -> MAIOR_IGUAL','oplogic',1,'p_oplogic_ge','parser_c.py',117),
+  ('oplogic -> MENOR_IGUAL','oplogic',1,'p_oplogic_le','parser_c.py',118),
+  ('oplogic -> IGUAL_IGUAL','oplogic',1,'p_oplogic_eq','parser_c.py',119),
+  ('oplogic -> DIFERENTE','oplogic',1,'p_oplogic_ne','parser_c.py',120),
+  ('act -> action NAMEDEVICE','act',2,'p_act_action','parser_c.py',122),
+  ('act -> ENVIAR ALERTA ( MSG ) NAMEDEVICE','act',6,'p_act_alerta_msg','parser_c.py',125),
+  ('act -> ENVIAR ALERTA ( MSG , NAMEDEVICE ) NAMEDEVICE','act',8,'p_act_alerta_obs','parser_c.py',128),
+  ('act -> ENVIAR ALERTA ( MSG ) PARA TODOS : dev_list','act',9,'p_act_broadcast','parser_c.py',131),
+  ('act -> ENVIAR ALERTA ( MSG , NAMEDEVICE ) PARA TODOS : dev_list','act',11,'p_act_broadcast_with_obs','parser_c.py',134),
+  ('dev_list -> NAMEDEVICE , dev_list','dev_list',3,'p_dev_list_multiple','parser_c.py',138),
+  ('dev_list -> NAMEDEVICE','dev_list',1,'p_dev_list_single','parser_c.py',139),
+  ('action -> LIGAR','action',1,'p_action_ligar','parser_c.py',141),
+  ('action -> DESLIGAR','action',1,'p_action_desligar','parser_c.py',142),
 ]
