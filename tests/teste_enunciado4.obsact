@@ -1,0 +1,10 @@
+dispositivo : { termostato, temperatura }
+dispositivo : { sensor_presenca, status }
+dispositivo : { ar_condicionado, modo }
+dispositivo : { Monitor }
+
+set temperatura = 32 .
+set status = FALSE .
+set modo = 0 .
+
+se temperatura > 25 entao se status == TRUE entao set modo = 1 senao set modo = 2 senao enviar alerta ("Temperatura agradavel.") Monitor .
