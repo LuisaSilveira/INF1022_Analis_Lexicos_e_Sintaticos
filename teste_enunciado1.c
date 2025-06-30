@@ -12,10 +12,10 @@ void alerta(char* namedevice, char* msg) { printf("%s recebeu o alerta: %s\n", n
 void alerta_obs(char* namedevice, char* msg, int obs_val) { printf("%s recebeu o alerta: %s %d\n", namedevice, msg, obs_val); }
 
 int main() {
-temperatura = 40;
-potencia = 90;
+    temperatura = 40;
+    potencia = 90;
     if (temperatura > 30) {
-    ligar("ventilador");
+        ligar("ventilador");
     }
     return 0;
 }

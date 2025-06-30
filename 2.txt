@@ -1,0 +1,35 @@
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> devices cmds
+Rule 2     devices -> device devices
+Rule 3     devices -> device
+Rule 4     device -> DISPOSITIVO : { NAMEDEVICE }
+Rule 5     device -> DISPOSITIVO : { NAMEDEVICE , NAMEDEVICE }
+Rule 6     cmds -> cmd . cmds
+Rule 7     cmds -> <empty>
+Rule 8     cmd -> attrib
+Rule 9     cmd -> obsact
+Rule 10    cmd -> act
+Rule 11    attrib -> SET NAMEDEVICE = var
+Rule 12    var -> NUM
+Rule 13    var -> BOOL
+Rule 14    obsact -> SE obs ENTAO cmd
+Rule 15    obsact -> SE obs ENTAO cmd SENAO cmd
+Rule 16    obs -> NAMEDEVICE oplogic var
+Rule 17    obs -> NAMEDEVICE oplogic var E_LOGICO obs
+Rule 18    oplogic -> GT
+Rule 19    oplogic -> LT
+Rule 20    oplogic -> MAIOR_IGUAL
+Rule 21    oplogic -> MENOR_IGUAL
+Rule 22    oplogic -> IGUAL_IGUAL
+Rule 23    oplogic -> DIFERENTE
+Rule 24    act -> action NAMEDEVICE
+Rule 25    act -> ENVIAR ALERTA ( MSG ) NAMEDEVICE
+Rule 26    act -> ENVIAR ALERTA ( MSG , NAMEDEVICE ) NAMEDEVICE
+Rule 27    act -> ENVIAR ALERTA ( MSG ) PARA TODOS : dev_list
+Rule 28    act -> ENVIAR ALERTA ( MSG , NAMEDEVICE ) PARA TODOS : dev_list
+Rule 29    dev_list -> NAMEDEVICE , dev_list
+Rule 30    dev_list -> NAMEDEVICE
+Rule 31    action -> LIGAR
+Rule 32    action -> DESLIGAR
