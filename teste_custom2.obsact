@@ -1,0 +1,10 @@
+dispositivo : { termostato, temperatura }
+dispositivo : { sensor_janela, aberta }
+dispositivo : { ar_condicionado }
+dispositivo : { aquecedor }
+dispositivo : { Monitor }
+
+set temperatura = 15 .
+set aberta = FALSE .
+
+se temperatura < 18 && aberta == FALSE entao ligar aquecedor senao se temperatura > 25 entao ligar ar_condicionado senao enviar alerta ("Temperatura Confortavel") Monitor .

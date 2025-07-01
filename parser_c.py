@@ -1,7 +1,7 @@
 import ply.yacc as yacc
 from lexer import tokens, lexer
 
-# --- Global variables for code generation ---
+# --- Variaveis Globais ---
 symbol_table = { 'devices': {}, 'observations': {} }
 c_code_includes = ['#include <stdio.h>', '#include <string.h>', '#include <stdbool.h>\n']
 c_code_helpers = [
@@ -21,24 +21,21 @@ precedence = (
     ('right', 'SENAO'),
 )
 
-# --- Grammar Rules ---
+# --- Regras de Gramatica ---
 
 def p_program(p):
     'program : devices cmds'
     global c_code_main_body
-    # O Clear limpa o corpo principal para execuções múltiplas se necessário
     c_code_main_body.clear() 
     c_code_main_body.extend(p[2] if p[2] is not None else [])
 
 
 def p_devices_list(p):
     'devices : device devices'
-    # This rule is for structure, no specific action needed here.
     pass
 
 def p_devices_single(p):
     'devices : device'
-    # This rule is for structure, no specific action needed here.
     pass
 
 def p_device_simple(p):
@@ -59,7 +56,6 @@ def p_cmds_empty(p):
     'cmds : '
     p[0] = []
 
-# --- Rules for 'cmd' (replaces 'cmd : attrib | obsact | act') ---
 def p_cmd_attrib(p):
     'cmd : attrib'
     p[0] = p[1]
@@ -72,7 +68,6 @@ def p_cmd_act(p):
     'cmd : act'
     p[0] = p[1]
 
-# Mude esta função em parser_c.py
 def p_attrib(p):
     'attrib : SET NAMEDEVICE "=" var'
     obs_name, value = p[2], p[4]
@@ -83,7 +78,6 @@ def p_attrib(p):
         print(f"Erro Semântico: Observation '{obs_name}' não declarada.")
         p[0] = ['']
 
-# --- Rules for 'var' (replaces 'var : NUM | BOOL') ---
 def p_var_num(p):
     'var : NUM'
     p[0] = p[1]
@@ -91,16 +85,10 @@ def p_var_bool(p):
     'var : BOOL'
     p[0] = 'true' if p[1] == 'TRUE' else 'false'
 
-# Mude estas duas funções em parser_c.py
-
 def p_obsact_if(p):
     'obsact : SE obs ENTAO cmd'
-    # p[4] é a lista de linhas de código do comando filho.
-    # Adicionamos 4 espaços a cada linha para criar o recuo do novo bloco.
     indented_block = ['    ' + line for line in p[4]]
     
-    # Construímos a saída como uma LISTA de linhas, não como uma string única.
-    # Isso permite que os pais na árvore de análise também possam indentar este bloco.
     result = []
     result.append(f'    if ({p[2]}) {{')
     result.extend(indented_block)
@@ -109,11 +97,9 @@ def p_obsact_if(p):
 
 def p_obsact_if_else(p):
     'obsact : SE obs ENTAO cmd SENAO cmd'
-    # Indentamos os blocos 'then' e 'else' separadamente.
     indented_then = ['    ' + line for line in p[4]]
     indented_else = ['    ' + line for line in p[6]]
     
-    # Construímos a saída como uma lista de linhas.
     result = []
     result.append(f'    if ({p[2]}) {{')
     result.extend(indented_then)
@@ -129,7 +115,6 @@ def p_obs_multiple(p):
     'obs : NAMEDEVICE oplogic var E_LOGICO obs'
     p[0] = f'({p[1]} {p[2]} {p[3]}) && ({p[5]})'
 
-# --- Rules for 'oplogic' (replaces rules with |) ---
 def p_oplogic_gt(p): 'oplogic : GT'; p[0] = p[1]
 def p_oplogic_lt(p): 'oplogic : LT'; p[0] = p[1]
 def p_oplogic_ge(p): 'oplogic : MAIOR_IGUAL'; p[0] = p[1]
