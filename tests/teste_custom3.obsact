@@ -1,0 +1,15 @@
+dispositivo : { relogio, hora }
+dispositivo : { calendario, dia_util }
+dispositivo : { cafeteira, pronta }
+dispositivo : { Celular }
+dispositivo : { assistente_voz }
+dispositivo : { Monitor }
+dispositivo : { luzes_quarto }
+
+set hora = 7 .
+set dia_util = TRUE .
+set pronta = TRUE .
+
+se hora == 7 && dia_util == TRUE entao enviar alerta ("Hora de acordar!") para todos: Celular, assistente_voz .
+se pronta == TRUE entao enviar alerta ("Cafe esta pronto!") Monitor .
+ligar luzes_quarto .
